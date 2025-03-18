@@ -57,7 +57,7 @@ export async function updateAction(formData: FormData, id: string) {
       // Image processes
       const arrayBuffer = await image.arrayBuffer();
       const buffer = new Uint8Array(arrayBuffer);
-      const imageResponse: any = await new Promise((resolve, reject) => {
+      const imageResponse= await new Promise((resolve, reject) => {
         cloudinary.uploader
           .upload_stream(
             {
@@ -90,9 +90,10 @@ export async function updateAction(formData: FormData, id: string) {
         success: "Product added successfully",
       };
     }
-  } catch (error) {
-    return {
-      error: "Something went wrong.",
-    };
+  }catch (error: unknown) {
+    if (error instanceof Error) {
+      return Response.json({ message: error.message }, { status: 400 });
+    }
+    return Response.json({ message: "An unknown error occurred" }, { status: 400 });
   }
 }

@@ -49,8 +49,11 @@ export async function DELETE(
       { message: "Product deleted successfully" },
       { status: 200 }
     );
-  } catch (error:any) {
+  } catch (error:unknown) {
 
-    return Response.json({message:error.message},{status:400})
+    if (error instanceof Error) {
+      return Response.json({ message: error.message }, { status: 400 });
+    }
+    return Response.json({ message: "An unknown error occurred" }, { status: 400 });
   }
 }
