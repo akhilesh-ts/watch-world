@@ -2,7 +2,7 @@
 import toast from "react-hot-toast";
 import { addAction } from "../../utils/addActions";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import Image from "next/image";
 
 const AddForm = () => {
